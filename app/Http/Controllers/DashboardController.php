@@ -29,7 +29,9 @@ class DashboardController extends Controller
         ProjectRepositoryInterface $projectRepository,
         UserRepositoryInterface $userRepository
     ): View {
-        Gate::authorize('view-detail-page', $projectId);
+        if (! Gate::any(['owner', 'full-access', 'edit-access', 'read-access'], $projectId)) {
+            abort(403);
+        }
 
         /** @var Project $project */
         $project = $projectRepository->getProjectById($projectId);

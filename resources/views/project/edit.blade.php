@@ -32,7 +32,11 @@
                                 <span class="text-gray-700">Status</span>
                                 <select name="status">
                                     @foreach($statuses as $status)
-                                        <option>{{$status}}</option>
+                                        @if ($status === $project->status)
+                                            <option selected>{{$status}}</option>
+                                        @else
+                                            <option>{{$status}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </label>

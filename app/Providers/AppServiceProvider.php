@@ -48,5 +48,13 @@ class AppServiceProvider extends ServiceProvider
                 ->first()
                 ?->role_id === Role::EDIT_ACCESS;
         });
+
+        Gate::define('read-access', function (User $user, string $projectId) {
+            return UserProjectRole::query()
+            ->where('user_id', $user->id)
+            ->where('project_id', $projectId)
+            ->first()
+            ?->role_id === Role::READ_ACCESS;
+        });
     }
 }
