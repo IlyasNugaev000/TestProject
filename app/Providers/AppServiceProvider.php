@@ -24,11 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('view-detail-page', function (User $user, string $projectId) {
-            return $user->foreignProjects()->where('projects.id', $projectId)->exists()
-                or $user->id === Project::query()->where('id', $projectId)->first()->creator_id;
-        });
-
         Gate::define('owner', function (User $user, string $projectId) {
             return $user->id === Project::query()->where('id', $projectId)->first()->creator_id;
         });
